@@ -202,6 +202,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
             if (rootNode == nullptr)
             {
                 rootNode = it->get(); // assign current node to root
+                                      // GraphNode ownership is not transferred when passing instances.
             }
             else
             {
