@@ -17,7 +17,9 @@ private:
     ////
 
     // data handles (owned)
+    // The GraphNodes in the vector _nodes are exclusively owned by the class ChatLogic
     std::vector<std::unique_ptr<GraphNode> > _nodes;
+    // The GraphEdges in the vector _edges will transfer ownership to GraphNode
     std::vector<std::unique_ptr<GraphEdge> > _edges;
 
     ////

@@ -164,8 +164,10 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                             AddAllTokensToElement("KEYWORD", tokens, *new_edge);
 
                             // store reference in child node and parent node
+                            // GraphNodes exclusively own the outgoing GraphEdges and hold non-owning references to incoming GraphEdges
+                            // transferring ownership of GraphEdge from class ChatLogic, into instances of GraphNode
                             (*childNode)->AddEdgeToParentNode(new_edge);
-                            (*parentNode)->AddEdgeToChildNode(new_edge);
+                            (*parentNode)->AddEdgeToChildNode(std::move(new_edge));
                         }
 
                         ////
