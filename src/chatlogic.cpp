@@ -36,7 +36,7 @@ ChatLogic::~ChatLogic()
     _nodes.clear();
 
     // delete all edges
-    _edges.clear();
+    // _edges removed
 
     ////
     //// EOF STUDENT CODE
@@ -154,17 +154,15 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                             auto edge = std::make_unique<GraphEdge>(id);
                             edge->SetChildNode(childNode->get());
                             edge->SetParentNode(parentNode->get());
-                            _edges.emplace_back(std::move(edge));
 
                             // find all keywords for current node
-                            auto new_edge = _edges.back().get();
-                            AddAllTokensToElement("KEYWORD", tokens, *new_edge);
+                            AddAllTokensToElement("KEYWORD", tokens, *edge.get());
 
                             // store reference in child node and parent node
                             // GraphNodes exclusively own the outgoing GraphEdges and hold non-owning references to incoming GraphEdges
                             // transferring ownership of GraphEdge from class ChatLogic, into instances of GraphNode
-                            (*childNode)->AddEdgeToParentNode(new_edge);
-                            (*parentNode)->AddEdgeToChildNode(std::move(new_edge));
+                            (*childNode)->AddEdgeToParentNode(edge.get());
+                            (*parentNode)->AddEdgeToChildNode(std::move(edge));
                         }
 
                         ////
