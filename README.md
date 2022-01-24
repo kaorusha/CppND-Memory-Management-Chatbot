@@ -4,67 +4,33 @@ This is the project for the third course in the [Udacity C++ Nanodegree Program]
 
 <img src="images/chatbot_demo.gif"/>
 
-The ChatBot code creates a dialogue where users can ask questions about some aspects of memory management in C++. After the knowledge base of the chatbot has been loaded from a text file, a knowledge graph representation is created in computer memory, where chatbot answers represent the graph nodes and user queries represent the graph edges. After a user query has been sent to the chatbot, the Levenshtein distance is used to identify the most probable answer. The code is fully functional as-is and uses raw pointers to represent the knowledge graph and interconnections between objects throughout the project.
+## Project Concept
+Learn [Resource management](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-resource):
+1. Learn about dynamic allocation, malloc/free, and new/delete
+2. Why we need new/delete after OOP was introduced and how to overload them for various reasons.
+3. What are the memory problems that happen with new/delete? Problems like a memory leak, dangling pointers, and so on.
+4. How data is being copied between objects, and what problems happen (like shallow copying).
+5. The rule of three describes the necessity of implementing the constructor, copy constructor and destructor, and destructor. Copying ways have a strong relationship to the philosophy behind smart pointers (no copying-> unique_ptr, exclusive, shared copying -> shared_ptr, and exclusive ownership also relates to the unique_ptr after their resources are moved, they are owned by only one object).
+6. Then, we come to discover that copying causes a lot of unnecessary creation, allocation, and deletion when objects are returned by value. We need to solve this problem for more memory efficiency.
+7. The ultimate solution of the copying is moving through move semantics. To understand move semantics, we need to know the concepts of lvalue and rvalue.
+8. Then, we learn about the rule of five that describes the structure of classes that can move resources rather than copying them.
+9. Then comes the RAII concept and how it is good to eliminate the need to delete or free resources by wrapping them around an object that takes care of that.
+10. The next topic is smart pointers. Please notice that they apply both move semantics and RAII to their internal resources (raw pointers) and eliminate the need to free them.
+11. Smart pointers types, use cases, and conversion between them.
+12. The topic of ownership and ways to pass smart pointers to function and vice-versa
 
-In this project you will analyze and modify the program. Although the program can be executed and works as intended, no advanced concepts as discussed in this course have been used; there are currently no smart pointers, no move semantics and not much thought has been given to ownership or memory allocation.
+There are two important related concepts to memory management that were not discussed deeply in the course. They are copy ellision, or omission, and return value optiimization. [This](https://stackoverflow.com/questions/12953127/what-are-copy-elision-and-return-value-optimization) is a good discussion about them with references to more detailed resources. 
+## Build and run
+The instructions is written in the original starter code [repository](https://github.com/udacity/CppND-Memory-Management-Chatbot).
 
-Your goal is to use the course knowledge to optimize the ChatBot program from a memory management perspective. There are a total of five specific tasks to be completed, which are detailed below.
-
-## Dependencies for Running Locally
-* cmake >= 3.11
-  * All OSes: [click here for installation instructions](https://cmake.org/install/)
-* make >= 4.1 (Linux, Mac), 3.81 (Windows)
-  * Linux: make is installed by default on most Linux distros
-  * Mac: [install Xcode command line tools to get make](https://developer.apple.com/xcode/features/)
-  * Windows: [Click here for installation instructions](http://gnuwin32.sourceforge.net/packages/make.htm)
-* gcc/g++ >= 5.4
-  * Linux: gcc / g++ is installed by default on most Linux distros
-  * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
-  * Windows: recommend using [MinGW](http://www.mingw.org/)
-* wxWidgets >= 3.0
-  * Linux: `sudo apt-get install libwxgtk3.0-gtk3-dev libwxgtk3.0-gtk3-0v5`. If you are facing unmet dependency issues, refer to the [official page](https://wiki.codelite.org/pmwiki.php/Main/WxWidgets30Binaries#toc2) for installing the unmet dependencies.
-  * Mac: There is a [homebrew installation available](https://formulae.brew.sh/formula/wxmac).
-  * Installation instructions can be found [here](https://wiki.wxwidgets.org/Install). Some version numbers may need to be changed in instructions to install v3.0 or greater.
-
-## Basic Build Instructions
-
-1. Clone this repo.
-2. Make a build directory in the top level directory: `mkdir build && cd build`
-3. Compile: `cmake .. && make`
-4. Run it: `./membot`.
-
-## Project Task Details
-
-Currently, the program crashes when you close the window. There is a small bug hidden somewhere, which has something to do with improper memory management. So your first warm-up task will be to find this bug and remove it. This should familiarize you with the code and set you up for the rest of the upcoming tasks. Have fun debugging!
-
-### Program Schematic
+## Program Schematic
 The `_chotLogic` handle communicate with GUI. `_chotLogic` owns `_nodes`. Each Node in `_nodes` owns its child Edges. And `_chatbot` is moving to each Node that pass the answer to the user.
 <img src="images/program_schematic.png"/>
 <img src="images/program_schematic_2.png"/>
 
-Aside from the bug mentioned above, there are five additional major student tasks in the Memory Management chatbot project, which are:
-
-### Task 1 : Exclusive Ownership 1
-In file `chatgui.h` / `chatgui.cpp`, make `_chatLogic` an exclusive resource to class `ChatbotPanelDialog` using an appropriate smart pointer. Where required, make changes to the code such that data structures and function parameters reflect the new structure. 
-
-### Task 2 : The Rule Of Five
-In file `chatbot.h` / `chatbot.cpp`, make changes to the class `ChatBot` such that it complies with the Rule of Five. Make sure to properly allocate / deallocate memory resources on the heap and also copy member data where it makes sense to you.  In each of the methods (e.g. the copy constructor), print a string of the type "ChatBot Copy Constructor" to the console so that you can see which method is called in later examples. 
-
-### Task 3 : Exclusive Ownership 2
-In file `chatlogic.h` / `chatlogic.cpp`, adapt the vector `_nodes` in a way that the instances of `GraphNodes` to which the vector elements refer are exclusively owned by the class `ChatLogic`. Use an appropriate type of smart pointer to achieve this. Where required, make changes to the code such that data structures and function parameters reflect the changes. When passing the `GraphNode` instances to functions, make sure to not transfer ownership and try to contain the changes to class `ChatLogic` where possible. 
-
-### Task 4 : Moving Smart Pointers
-
-In files `chatlogic.h` / `chatlogic.cpp` and `graphnode.h` / `graphnode.cpp` change the ownership of all instances of `GraphEdge` in a way such that each instance of `GraphNode` exclusively owns the outgoing `GraphEdges` and holds non-owning references to incoming `GraphEdges`. Use appropriate smart pointers and where required, make changes to the code such that data structures and function parameters reflect the changes. When transferring ownership from class `ChatLogic`, where all instances of `GraphEdge` are created, into instances of `GraphNode`, make sure to use move semantics. 
-
-### Task 5 : Moving the ChatBot
-
-In file `chatlogic.cpp`, create a local `ChatBot` instance on the stack at the bottom of function `LoadAnswerGraphFromFile`. Then, use move semantics to pass the `ChatBot` instance into the root node. Make sure that `ChatLogic` has no ownership relation to the `ChatBot` instance and thus is no longer responsible for memory allocation and deallocation. Note that the member `_chatBot` of `ChatLogic` remains so it can be used as a communication handle between GUI and `ChatBot` instance. Make all required changes in files `chatlogic.h` / `chatlogic.cpp` and `graphnode.h` / `graphnode.cpp`. When the program is executed, messages on which part of the Rule of Five components of `ChatBot` is called should be printed to the console. When sending a query to the `ChatBot`, the output should look like the following: 
-
-```
-ChatBot Constructor
-ChatBot Move Constructor
-ChatBot Move Assignment Operator
-ChatBot Destructor
-ChatBot Destructor 
-```
+## Reviewer recommended reference material
+* [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
+* [Understanding GCC warnings](https://developers.redhat.com/blog/2019/03/13/understanding-gcc-warnings#)
+* Understanding Move Semantics and Perfect Forwarding: [part 1](https://medium.com/@dr3wc/understanding-move-semantics-and-perfect-forwarding-987cf4dc7e27), [part 2](https://medium.com/@dr3wc/understanding-move-semantics-and-perfect-forwarding-part-2-6b8266b6cfa4), [part 3](https://medium.com/@dr3wc/understanding-move-semantics-and-perfect-forwarding-part-3-65575d523ff8).
+* [When C++ doesn't move](https://pspdfkit.com/blog/2019/when-cpp-doesnt-move/)
+* [Understanding when not to std::move in C++](https://developers.redhat.com/blog/2019/04/12/understanding-when-not-to-stdmove-in-c/)
