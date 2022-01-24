@@ -29,14 +29,13 @@ ChatLogic::~ChatLogic()
     //// STUDENT CODE
     ////
 
-    // delete chatbot instance
-    // delete _chatBot; // ChatLogic has no ownership relation to the ChatBot instance and thus is no longer responsible for memory allocation and deallocation.
+    /* ChatLogic has no ownership relation to the instance:
+    ChatBot
+    Edge 
+    and thus is no longer responsible for memory allocation and deallocation. */
 
     // delete all nodes
     _nodes.clear();
-
-    // delete all edges
-    // _edges removed
 
     ////
     //// EOF STUDENT CODE

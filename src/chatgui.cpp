@@ -136,7 +136,7 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
     //// STUDENT CODE
     ////
 
-    //delete _chatLogic;
+    // not calling delete as unique_pointer _chatLogic is used
 
     ////
     //// EOF STUDENT CODE
