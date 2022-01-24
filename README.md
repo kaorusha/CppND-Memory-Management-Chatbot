@@ -30,6 +30,8 @@ The `_chotLogic` handle communicate with GUI. `_chotLogic` owns `_nodes`. Each N
 
 ## Reviewer recommended reference material
 * [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
+* [cpp code optimization](https://www.thegeekstuff.com/2015/01/c-cpp-code-optimization/)
+* [Performance improving features](https://en.wikibooks.org/wiki/Optimizing_C%2B%2B/Writing_efficient_code/Performance_improving_features)
 * [Understanding GCC warnings](https://developers.redhat.com/blog/2019/03/13/understanding-gcc-warnings#)
 * Understanding Move Semantics and Perfect Forwarding: [part 1](https://medium.com/@dr3wc/understanding-move-semantics-and-perfect-forwarding-987cf4dc7e27), [part 2](https://medium.com/@dr3wc/understanding-move-semantics-and-perfect-forwarding-part-2-6b8266b6cfa4), [part 3](https://medium.com/@dr3wc/understanding-move-semantics-and-perfect-forwarding-part-3-65575d523ff8).
 * [When C++ doesn't move](https://pspdfkit.com/blog/2019/when-cpp-doesnt-move/)
